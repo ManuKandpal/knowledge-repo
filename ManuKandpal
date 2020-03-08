@@ -1,0 +1,65 @@
+Background
+13C labeling is an experimental method to probe metabolic pathways in living systems. While it has historically been used in bacteria for the purpose of metabolic engineering, it is becoming increasingly common to study mammalian cells and to probe the metabolic perturbations in various diseases. Mass spectrometry, mainly LC-MS and LC-MS/MS, forms the experimental bedrock of these studies as they allow collection of high resolution data from small amounts of biological samples. Once these data have been collected, they are processed, analysed and visualized to obtain actionable biological insights. See this paper for understanding on how to interpret 13C labeling data.
+
+Your task in this assignment is to take the labeled LC-MS time course data given to you and help us understand the effects of time and viral infection on cell metabolism, primarily on glycolysis and TCA cycle.
+Given
+● Control samples containing cells with mock vector and viral vector were switched to a media containing 100% [U-13C6] Glucose at t=0 minutes
+● Samples were collected and prepared at various time points after exposure to labeled glucose media
+● The data were collected using LC-MS.
+● The LC-MS data were processed using El-MAVEN and processed intensities of various metabolites and their isotopologues were calculated. These processed data are given in the file, maven_processed.csv
+● The information about the samples is given in the file, sample_metadata.csv
+● The information about measured metabolites is given in the file, compound_rt_database.csv
+To do
+1.	Identify the effects of time and viral infection on cell metabolism through global analytical techniques. Focus on glycolysis and TCA cycle, by looking at changes in pool total and fractional enrichment of 13C labels in metabolites.
+2.	Communicate your process and findings in a reproducible way through a knowledge repo. Include a brief background of the problem, steps you took to manipulate the data, key findings, and any conclusions/final comments you would like to make.
+
+Definitions:
+Pool total: The sum of intensities of all isotopologues of a metabolite in a sample
+Fractional enrichment: The percentage of any given labeled form of a metabolite within the total pool of that metabolite
+
+
+
+Instructions:
+The suggested tools are outlined with each step below. You can use other tools as long as you are able to show the process and communicate findings through a knowledge repo. Standalone plots and excel files are not acceptable.
+
+1.	Global analysis of the data and presentation of information in a form that biologists can understand. 
+A simple way to do global analysis of the data is to generate a PCA plot. (Suggested tools: Use python or R to transform and analyze the data. You can also use a tool like phantasus. If you are using phantasus, make sure to save the analysis in a json file and include the resulting plots in the knowledge repo) 
+
+1.	Calculate pool totals and fractional enrichments of metabolites 
+	Data save in tables named as pool_tables.tsv and fractional_enrichments.tsv. Script used in its generation in metabolites-analysis.R.
+2.	Generate a PCA plot with pool totals of metabolites. Do you need to do any data transformation on intensity values for PCA to make sense, why or why not?
+	PCA plot was generated and saved in a file named as PCA.png. Yes I needed to transform the data. I log transformed the data to decrease the scale and skewness of the data. 
+Script used in its generation in metabolites-analysis.R.
+
+3.	What are your main takeaways from the PCA plot and explain how it correlates with the metadata of the experiment.
+	PCA plots shows us that there was high variance among infected and mock cells in the preliminary infection  time points i.e. 0,1,3,5 and 15 as the infection time increased i.e. 120 and 240 min the variance in the metabolites also decreased, this was depicted according to PC1 which captures maximum variance.
+
+2. Specific analysis and presentation of information in a form that biologists can understand it
+With the global understanding of the data done, let’s dive deep into the specific trends of metabolites (Suggestion: use python or R to create line charts or bar charts to highlight your points)
+1.	For metabolites of TCA cycle and glycolysis present in the data, how do the pool total and fractional enrichments behave with time and infection? 
+	The concentration of metabolites of TCA cycle and glycolysis changes with viral infection.  The metabolites show increased and decreased pattern at different time points. Metabolites show increase in pattern in the initial infection time points while this difference between the concentration of metabolites between infected cell and mock cell becomes less significant in latter time points.
+
+	Fructose -1-6-bisphosphate utilization in glycolysis pathway increases in initial time points of infection then becomes equal to mock cell at 120, 240 min. As shown in red color glycolysis_pool_total.png.
+
+	In TCA cycle the utilization of aspartate and fumarate utilization decreases in comparison to normal mock cells.  As shown in green and black color in TCA_pool_total.png
+	Script used in its generation in metabolites-analysis.R.
+
+2.	What do the behaviours tell you about the biological changes in the system?
+	Virus infection dramatically alters induces glycolysis and/ glycolysis. Thise induction of host’s metabolic pathways is necessary for its replication and spread.
+
+
+3. Tracking and sharing the analysis
+A very important part of the analysis is its reproducibility. To make analysis reproducible we need to preserve threads of thoughts and share it. One way to do this is to use a framework which preserves all the steps in an analysis and what else can be better than git. Fortunately, we already have solutions such as knowledge repo available. While we are doing the analysis, we would also  like to share it with our colleagues and ask for their opinion.
+
+1.	Use knowledge repo to track the analysis done above and host it on GitHub (don’t make the data public). Include the background, code, plots, analysis, and your thoughts and comments in the knowledge repo.
+	The scripts, plots and tables were uploaded.
+2.	(optional) Host the knowledge repo on a server (e.g. Heroku) 
+
+Bonus question:
+In any labeled experiment, it is important to correct for the effects of natural abundance of the labeled isotope tracer being used. There are many open-source packages available to perform natural abundance correction such as IsoCor. 
+1.	Explain in your own words why it is necessary to perform natural abundance correction in a labeling experiment.
+	In any labelled experiment isotopically labeled substrates are used to measure intracellular metabolic dynamics. The stable isotopes that are used for labelling just alter the mass without altering the chemical behaviour of the molecules. As there is natural abundance of stable isotopes some atoms. So it becomes necessary to account natural abundance in the labelling experiment. 
+2.	Correct the intensities of one metabolite using any package and show the effect of natural abundance on the measured intensities before and after correction.
+
+
+
